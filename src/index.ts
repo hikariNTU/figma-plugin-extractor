@@ -1,13 +1,8 @@
-export default {}
 import App from './App'
 import { render } from 'preact'
 
 const renderApp = () => {
-  const app = document.getElementById('app')
-  console.log(app, 'render')
-  if (app) {
-    render(App(), app)
-  }
+  render(App(), document.body)
 }
 
 ;(function () {
