@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Extractor</title>
   <link rel="stylesheet" href="./src/assets/style.scss">
+  <script type="module" src="./src/index.ts"></script>
 </head>
 
 <body class="app">
@@ -16,33 +17,15 @@
   <div class="action">
     <span class="action-title">Action</span>
     <button id="getColor">Get Color</button>
+    <button id="getText">Get Typography</button>
+    <div id="app"></div>
+    <hr class="action-hr" />
     <button id="cancel">Cancel</button>
   </div>
   <div class="text">
-    <textarea spellcheck="false" class="x-scroll-bar" name="color" id="color" cols="30" rows="10"
-      placeholder="Color will be insert here"></textarea>
+    <textarea spellcheck="false" class="x-scroll-bar" name="editor" id="editor" cols="30" rows="10"
+      placeholder="Text will be insert here"></textarea>
   </div>
-
-  <script>
-    document.getElementById('cancel').onclick = () => {
-      parent.postMessage({ pluginMessage: { type: 'cancel' } }, '*')
-    }
-
-    document.getElementById('getColor').onclick = () => {
-      parent.postMessage({ pluginMessage: { type: 'getColor' } }, '*')
-    }
-
-    onmessage = (event) => {
-      console.log(event.data.pluginMessage)
-      switch (event.data?.pluginMessage?.type) {
-        case "color":
-          document.getElementById('color').value = JSON.stringify(event.data.pluginMessage.data, undefined, 2)
-          break;
-        default:
-          break;
-      }
-    };
-  </script>
 </body>
 
 </html>

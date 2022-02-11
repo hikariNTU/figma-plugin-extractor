@@ -14,18 +14,22 @@
     "outDir": "dist",
     "strict": true,
     "jsx": "preserve",
+    "jsxFactory": "h",
+    "jsxFragmentFactory": "Fragment",
     "sourceMap": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "newLine": "lf",
     "skipLibCheck": true,
+    "isolatedModules": true
   },
   "files": [
     "env.d.ts",
   ],
   "include": [
     "./src/**/*",
-    "./script/**/*"
+    "./script/**/*",
+    "./temp/**/*"
   ],
   "exclude": [
     "**/node_modules/**/*",
