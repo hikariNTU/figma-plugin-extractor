@@ -1,19 +1,16 @@
 import { defineConfig } from 'vite'
+import { viteSingleFile } from 'vite-plugin-singlefile'
 
-// https://vitejs.dev/config/
 export default defineConfig({
-  // plugins: [],
-  // base: './',
+  plugins: [viteSingleFile()],
   define: {
     __PLUGIN_VERSION__: JSON.stringify(process.env.npm_package_version),
   },
-  // resolve: {
-  // },
   server: {
     port: 3333,
   },
   build: {
-    cssCodeSplit: true,
+    cssCodeSplit: false,
     target: ['es6'],
   },
 })

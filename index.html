@@ -1,32 +1,48 @@
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head> -->
+  <title>Extractor</title>
+  <link rel="stylesheet" href="./src/assets/style.scss">
+</head>
 
-<!-- <body> -->
-  <h2>Rectangle Creator</h2>
-  <p>Count: <input id="count" value="5"></p>
-  <button id="create">Create</button>
-  <button id="cancel">Cancel</button>
+<body class="app">
+  <header class="header">
+    <span>Extractor (alpha: __PLUGIN_VERSION__)</span>
+  </header>
+  <div class="action">
+    <span class="action-title">Action</span>
+    <button id="getColor">Get Color</button>
+    <button id="cancel">Cancel</button>
+  </div>
+  <div class="text">
+    <textarea spellcheck="false" class="x-scroll-bar" name="color" id="color" cols="30" rows="10"
+      placeholder="Color will be insert here"></textarea>
+  </div>
+
   <script>
-
-    document.getElementById('create').onclick = () => {
-      const textbox = document.getElementById('count');
-      const count = parseInt(textbox.value, 10);
-      parent.postMessage({ pluginMessage: { type: 'create-rectangles', count } }, '*')
-    }
-
     document.getElementById('cancel').onclick = () => {
       parent.postMessage({ pluginMessage: { type: 'cancel' } }, '*')
     }
 
+    document.getElementById('getColor').onclick = () => {
+      parent.postMessage({ pluginMessage: { type: 'getColor' } }, '*')
+    }
+
+    onmessage = (event) => {
+      console.log(event.data.pluginMessage)
+      switch (event.data?.pluginMessage?.type) {
+        case "color":
+          document.getElementById('color').value = JSON.stringify(event.data.pluginMessage.data, undefined, 2)
+          break;
+        default:
+          break;
+      }
+    };
   </script>
+</body>
 
-<!-- </body>
-
-</html> -->
+</html>

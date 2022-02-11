@@ -1,0 +1,126 @@
+.x-scroll-bar {
+  $size: 0.75rem;
+  $thick: 1.5;
+
+  &::-webkit-scrollbar {
+    width: $size;
+    height: $size;
+  }
+  &::-webkit-scrollbar-button {
+    display: none;
+  }
+  /* Track */
+  &::-webkit-scrollbar-track {
+    background-color: #9990;
+    border-radius: 30px;
+    &:hover {
+      background-color: #9992;
+    }
+  }
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    border-radius: 20px;
+    border: 3px solid transparent;
+    background-color: #9996;
+    background-clip: content-box;
+    &:hover {
+      background-color: #999c;
+    }
+  }
+
+  &-lg {
+    &::-webkit-scrollbar {
+      width: calc(#{$size} * #{$thick});
+      height: calc(#{$size} * #{$thick});
+    }
+    &::-webkit-scrollbar-thumb {
+      border-width: calc(3.5px * #{$thick});
+    }
+  }
+}
+
+.x-aria-tooltip {
+  --x-atp-tip-l: 10px;
+  --x-atp-bg: #131414;
+  --x-atp-color: white;
+  --x-atp-p: 6px 12px;
+  --x-atp-bs: 0px 4px 8px 2px #0001;
+  --x-atp-w: max-content;
+
+  position: relative;
+  overflow: visible;
+
+  &:not(:disabled) {
+    &:hover,
+    &:focus-visible {
+      &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 50%;
+        width: var(--x-atp-tip-l);
+        height: var(--x-atp-tip-l);
+        border-bottom-right-radius: 3px;
+        background-color: var(--x-atp-bg);
+        transform: translate(-50%, calc(-100% - 2px)) rotate(45deg);
+      }
+      &::after {
+        content: attr(aria-label);
+        position: absolute;
+        top: 0;
+        left: 50%;
+        width: var(--x-atp-w);
+        padding: var(--x-atp-p);
+        background-color: var(--x-atp-bg);
+        color: var(--x-atp-color);
+        border-radius: 4px;
+        box-shadow: var(--x-atp-bs);
+        transform: translate(-50%, calc(-100% - 6px));
+      }
+    }
+
+    &:focus-visible {
+      box-shadow: 0 0 1px 2px #0074e666;
+      outline: none;
+    }
+  }
+
+  &--bottom {
+    &:not(:disabled) {
+      &:hover,
+      &:focus-visible {
+        &::before {
+          top: unset;
+          bottom: 0;
+          left: 50%;
+          border-top-left-radius: 3px;
+          transform: translate(-50%, calc(100% + 2px)) rotate(45deg);
+        }
+        &::after {
+          top: unset;
+          transform: translate(-50%, calc(100% + 6px));
+        }
+      }
+    }
+  }
+  &--right {
+    &:not(:disabled) {
+      &:hover,
+      &:focus-visible {
+        &::before {
+          top: 50%;
+          left: unset;
+          right: 0;
+          border-bottom-left-radius: 3px;
+          transform: translate(calc(100% + 2px), -50%) rotate(45deg);
+        }
+        &::after {
+          top: 50%;
+          left: unset;
+          right: 0;
+          transform: translate(calc(100% + 6px), -50%);
+        }
+      }
+    }
+  }
+}
