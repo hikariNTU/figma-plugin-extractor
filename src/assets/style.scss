@@ -1,0 +1,123 @@
+@import url("./normalize.css");
+@import "./utils.scss";
+
+:root {
+  --bd: solid 1px #2222;
+}
+
+body {
+  font-family: "Inter", "PingFang TC", "Noto Sans TC", "Microsoft JhengHei UI", "Microsoft JhengHei", sans-serif;
+}
+
+.app {
+  display: grid;
+  grid-template-areas:
+    "header header"
+    "action text";
+  grid-template-columns: minmax(auto, 150px) 1fr;
+  grid-template-rows: auto 1fr;
+}
+
+.header {
+  grid-area: header;
+  border-bottom: var(--bd);
+
+  padding: 0.5rem 1rem;
+  color: #555;
+  font-size: large;
+  letter-spacing: 0.1em;
+}
+
+.action {
+  padding: 0.5rem 0;
+  display: flex;
+  flex-direction: column;
+  border-right: var(--bd);
+  border-bottom: var(--bd);
+  &-title {
+    padding: 0.25rem 16px;
+    font-size: small;
+    color: #777;
+  }
+}
+
+#color {
+  width: 100%;
+  height: 100%;
+  flex: 1;
+  border: none;
+  border-bottom: var(--bd);
+  border-right: var(--bd);
+  border-radius: 0;
+  resize: none;
+  padding: 1rem;
+  font-size: small;
+  font-family: monospace;
+  color: #333;
+  white-space: pre;
+  overflow: auto;
+
+  &:focus {
+    outline: solid 2px rgb(48, 172, 255, 0.5);
+  }
+
+  &::selection {
+    background-color: rgb(48, 172, 255, 0.2);
+  }
+}
+
+button {
+  --x-btn-bg: #0000;
+  --x-btn-bd-color: #0000;
+  --x-btn-color: rgb(39, 109, 238);
+
+  &:disabled {
+    pointer-events: none;
+    cursor: unset;
+  }
+
+  &:hover {
+    --x-btn-bg: #0001;
+    --x-btn-bd-color: #0001;
+  }
+
+  &:active {
+    --x-btn-bg: #0002;
+    --x-btn-bd-color: #0001;
+    transition: none;
+  }
+
+  // css
+  padding: 8px 16px;
+  display: inline-flex;
+  justify-content: start;
+  align-items: center;
+
+  background-color: var(--x-btn-bg);
+  color: var(--x-btn-color);
+
+  border: 0 solid;
+  border-color: var(--x-btn-bd-color);
+  box-shadow: 0 0 0 0 #4d8edc77;
+
+  font-weight: 400;
+  letter-spacing: 0.05em;
+
+  white-space: nowrap;
+  touch-action: manipulation;
+  box-sizing: border-box;
+  text-decoration: none;
+  cursor: pointer;
+
+  transition: box-shadow 0.15s, background-color 0.15s;
+
+  &:focus {
+    outline: none;
+  }
+  &:focus-visible {
+    box-shadow: 0 0 0 3px #7c7c7c77;
+    &:active {
+      box-shadow: 0 0 0 3px #7c7c7c;
+    }
+  }
+}

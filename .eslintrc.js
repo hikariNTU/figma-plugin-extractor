@@ -16,10 +16,8 @@ module.exports = {
   },
   plugins: ['@typescript-eslint'],
   rules: {
-    indent: ['warn', 2],
     'linebreak-style': ['warn', 'unix'],
     quotes: ['warn', 'single'],
     semi: ['warn', 'never'],
-    'no-trailing-spaces': ['warn'],
   },
 }
