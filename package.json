@@ -26,13 +26,16 @@
     "url": "https://github.com/hikariNTU/figma-plugin-extractor"
   },
   "devDependencies": {
+    "@babel/core": "^7.17.2",
     "@figma/plugin-typings": "^1.42.1",
+    "@preact/preset-vite": "^2.1.7",
     "@types/node": "^17.0.17",
     "@typescript-eslint/eslint-plugin": "^5.11.0",
     "@typescript-eslint/parser": "^5.11.0",
     "eslint": "^8.8.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
+    "preact": "^10.6.5",
     "prettier": "^2.5.1",
     "sass": "^1.49.7",
     "ts-node": "^10.5.0",

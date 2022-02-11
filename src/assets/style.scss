@@ -5,6 +5,10 @@
   --bd: solid 1px #2222;
 }
 
+html {
+  font-size: 12px;
+}
+
 body {
   font-family: "Inter", "PingFang TC", "Noto Sans TC", "Microsoft JhengHei UI", "Microsoft JhengHei", sans-serif;
 }
@@ -21,10 +25,12 @@ body {
 .header {
   grid-area: header;
   border-bottom: var(--bd);
-
-  padding: 0.5rem 1rem;
-  color: #555;
-  font-size: large;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0.25rem 0.5rem;
+  color: #ccc;
+  background-color: #2a2a2c;
   letter-spacing: 0.1em;
 }
 
@@ -34,14 +40,26 @@ body {
   flex-direction: column;
   border-right: var(--bd);
   border-bottom: var(--bd);
+
   &-title {
-    padding: 0.25rem 16px;
+    margin-bottom: 4px;
+    padding: 0 16px 4px 16px;
+    border-bottom: var(--bd);
     font-size: small;
-    color: #777;
+    color: #666;
+  }
+
+  &-hr {
+    margin-top: auto;
+    display: block;
+    width: 100%;
+    height: 1px;
+    background-color: #2221;
+    border: none;
   }
 }
 
-#color {
+#editor {
   width: 100%;
   height: 100%;
   flex: 1;
@@ -69,7 +87,7 @@ body {
 button {
   --x-btn-bg: #0000;
   --x-btn-bd-color: #0000;
-  --x-btn-color: rgb(39, 109, 238);
+  --x-btn-color: rgb(8, 120, 195);
 
   &:disabled {
     pointer-events: none;

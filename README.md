@@ -1,3 +1,5 @@
+<div style='text-align: center'><img src='./src/assets/icon/extractor.svg' alt="" ></div>
+
 # figma-plugin-extractor
 extract figma data to variable
 
