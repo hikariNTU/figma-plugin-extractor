@@ -12,6 +12,7 @@ const EventBtn: FunctionComponent<ButtonEvent> = ({ name, event }) => (
 const ActionBlock = () => {
   const actions = {
     color: { name: 'Get Color', event: 'getColor' },
+    cssColor: { name: 'to cssColor', event: 'toCssColor' },
     text: { name: 'Get Typography', event: 'getText' },
     cancel: { name: 'Cancel', event: 'cancel' },
   }
@@ -21,6 +22,7 @@ const ActionBlock = () => {
       <span class="action-title">Action</span>
       <EventBtn name={actions.color.name} event={actions.color.event} />
       <EventBtn name={actions.text.name} event={actions.text.event} />
+      <EventBtn name={actions.cssColor.name} event={actions.cssColor.event} />
       <div id="app"></div>
       <hr class="action-hr" />
       <EventBtn name={actions.cancel.name} event={actions.cancel.event} />

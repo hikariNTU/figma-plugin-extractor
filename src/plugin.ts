@@ -1,4 +1,4 @@
-import { getColor, getTypography, toCssVariable } from './utils'
+import { colorToCss, getColor, getTypography, toCssVariable } from './utils'
 
 figma.showUI(__html__, {
   title: 'Extract Style (alpha)',
@@ -16,7 +16,6 @@ figma.ui.onmessage = (msg) => {
       type: 'color',
       data: color,
     })
-    return
   } else if (msg.type === 'getText') {
     const texts = getTypography().map((v) => ({
       ...v,
@@ -26,7 +25,13 @@ figma.ui.onmessage = (msg) => {
       type: 'typo',
       data: texts,
     })
-    return
+  } else if (msg.type === 'toCssColor') {
+    const colors = getColor()
+    figma.ui.postMessage({
+      type: 'color',
+      data: colors.map((color) => colorToCss(color)),
+    })
+  } else {
+    figma.closePlugin()
   }
-  figma.closePlugin()
 }

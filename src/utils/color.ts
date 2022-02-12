@@ -7,6 +7,14 @@ export interface ColorInfo {
   opacity?: number
 }
 
+/** 0~255 integer */
+export type Color8Bit = number
+
+/** 0~1 float */
+export type OpacityFloat = number
+export type RGBList = [Color8Bit, Color8Bit, Color8Bit]
+export type RGBAList = [...RGBList, OpacityFloat]
+
 /**
  * Retrieve all used local color in figma file.
  * @returns Color info if paint type is solid
@@ -28,4 +36,14 @@ export const getColor = (): ColorInfo[] => {
     })
 
   return allColor
+}
+
+export const toRGB = (color: ColorInfo): RGBList | RGBAList => {
+  const rgba = [color.rgb.r, color.rgb.g, color.rgb.b].map((v) =>
+    Math.round(v * 255)
+  ) as RGBList
+  if (color.opacity !== undefined && color.opacity !== 1) {
+    rgba.push(color.opacity)
+  }
+  return rgba
 }
