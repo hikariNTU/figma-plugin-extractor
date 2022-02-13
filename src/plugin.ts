@@ -1,10 +1,25 @@
-import { getColor, getTypography, toCssVariable } from './utils'
+import {
+  CssEntry,
+  colorToCss,
+  gatherTypoStyles,
+  generateClassSheet,
+  generateStyleSheet,
+  getColor,
+  getTypography,
+  toCssVariable,
+} from './utils'
 
 figma.showUI(__html__, {
   title: 'Extract Style (alpha)',
   height: 600,
   width: 800,
 })
+
+class GlobalOptions {
+  prefix = 'xv'
+}
+
+const globalOptions = new GlobalOptions()
 
 figma.ui.onmessage = (msg) => {
   if (msg.type === 'getColor') {
@@ -16,7 +31,6 @@ figma.ui.onmessage = (msg) => {
       type: 'color',
       data: color,
     })
-    return
   } else if (msg.type === 'getText') {
     const texts = getTypography().map((v) => ({
       ...v,
@@ -26,7 +40,34 @@ figma.ui.onmessage = (msg) => {
       type: 'typo',
       data: texts,
     })
-    return
+  } else if (msg.type === 'toCssColor') {
+    const colors = getColor()
+    const entries: CssEntry[] = []
+    colors.forEach((color) => {
+      entries.push(
+        ...colorToCss(color, undefined, { prefix: globalOptions.prefix })
+      )
+    })
+    figma.ui.postMessage({
+      type: 'string',
+      data: generateStyleSheet(entries),
+    })
+  } else if (msg.type === 'toCssFont') {
+    const styleSheet = getTypography()
+      .map((font) => ({
+        entries: gatherTypoStyles(font),
+        name: toCssVariable(font.name, { prefix: globalOptions.prefix }).slice(
+          2
+        ),
+      }))
+      .map(({ entries, name }) => generateClassSheet(entries, name))
+      .join('\n\n')
+
+    figma.ui.postMessage({
+      type: 'string',
+      data: styleSheet,
+    })
+  } else {
+    figma.closePlugin()
   }
-  figma.closePlugin()
 }

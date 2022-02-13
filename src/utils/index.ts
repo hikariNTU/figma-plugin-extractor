@@ -1,3 +1,5 @@
-export * from './color'
-export * from './typography'
+export * from './localGetters'
 export * from './transform'
+export * from './pick'
+export * from './typography'
+export * from './type'

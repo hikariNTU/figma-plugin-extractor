@@ -1,3 +1,9 @@
+:root {
+  --black--rgb: 255, 18, 120;
+  --black--opacity: 0.9;
+  --black: rgb(var(--black--rgb), var(--black--opacity, 1));
+}
+
 .x-scroll-bar {
   $size: 0.75rem;
   $thick: 1.5;
