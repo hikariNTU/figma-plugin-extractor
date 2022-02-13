@@ -1,5 +1,8 @@
-import { resolve } from 'path'
+import { dirname, resolve } from 'path'
+import { fileURLToPath } from 'url'
 import { build } from 'vite'
+
+const __dirname = dirname(fileURLToPath(import.meta.url))
 
 build({
   build: {

@@ -4,8 +4,9 @@
     "lib": [
       "es6",
       "DOM",
-      "ESNext"
+      "esnext"
     ],
+    "module": "esnext",
     "moduleResolution": "node",
     "typeRoots": [
       "./node_modules/@types",
