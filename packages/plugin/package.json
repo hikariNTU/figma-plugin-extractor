@@ -1,0 +1,29 @@
+{
+  "name": "@figma-plugin-extractor/plugin",
+  "version": "0.0.1",
+  "description": "Extract figma data plugin",
+  "keywords": [
+    "figma",
+    "figma-plugin",
+    "extract",
+    "data"
+  ],
+  "engines": {
+    "node": ">=14",
+    "pnpm": ">=6.25.0"
+  },
+  "main": "dist/plugin.js",
+  "scripts": {
+    "start": "vite",
+    "build": "vite build",
+    "build-plugin": "tsm ./script/build-plugin.ts",
+    "bundle": "pnpm build && pnpm build-plugin"
+  },
+  "author": "hikariNTU",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hikariNTU/figma-plugin-extractor"
+  },
+  "devDependencies": {}
+}

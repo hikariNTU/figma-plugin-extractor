@@ -24,13 +24,11 @@
     "skipLibCheck": true,
     "isolatedModules": true
   },
-  "files": [
-    "env.d.ts",
-  ],
   "include": [
-    "./src/**/*",
-    "./script/**/*",
-    "./temp/**/*"
+    "./packages/*/src/**/*",
+    "./packages/*/script/**/*",
+    "./temp/**/*",
+    "./packages/*/*.d.ts"
   ],
   "exclude": [
     "**/node_modules/**/*",
