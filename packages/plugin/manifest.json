@@ -1,5 +1,5 @@
 {
-  "name": "extractor",
+  "name": "Extractor",
   "id": "1073793027425645110",
   "api": "1.0.0",
   "main": "dist/plugin.js",
