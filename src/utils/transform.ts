@@ -75,9 +75,13 @@ const generateClassSheet = (entries: CssEntry[], name: string): string => {
 // Color transform
 const colorToCss = (
   color: ColorInfo,
-  func: ColorVariableType = ColorVariableType.rgbBundle
+  func: ColorVariableType = ColorVariableType.rgbBundle,
+  cssVariableOptions?: Partial<CssVariableOption>
 ): CssEntry[] => {
-  return colorCssFunctions[func](toCssVariable(color.name), toRGB(color))
+  return colorCssFunctions[func](
+    toCssVariable(color.name, cssVariableOptions),
+    toRGB(color)
+  )
 }
 
 // Type transform

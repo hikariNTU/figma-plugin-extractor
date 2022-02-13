@@ -15,6 +15,12 @@ figma.showUI(__html__, {
   width: 800,
 })
 
+class GlobalOptions {
+  prefix = 'xv'
+}
+
+const globalOptions = new GlobalOptions()
+
 figma.ui.onmessage = (msg) => {
   if (msg.type === 'getColor') {
     const color = getColor().map((v) => ({
@@ -38,7 +44,9 @@ figma.ui.onmessage = (msg) => {
     const colors = getColor()
     const entries: CssEntry[] = []
     colors.forEach((color) => {
-      entries.push(...colorToCss(color))
+      entries.push(
+        ...colorToCss(color, undefined, { prefix: globalOptions.prefix })
+      )
     })
     figma.ui.postMessage({
       type: 'string',
@@ -48,7 +56,9 @@ figma.ui.onmessage = (msg) => {
     const styleSheet = getTypography()
       .map((font) => ({
         entries: gatherTypoStyles(font),
-        name: toCssVariable(font.name, { prefix: 'xv-' }).slice(2),
+        name: toCssVariable(font.name, { prefix: globalOptions.prefix }).slice(
+          2
+        ),
       }))
       .map(({ entries, name }) => generateClassSheet(entries, name))
       .join('\n\n')
