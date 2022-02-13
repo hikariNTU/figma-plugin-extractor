@@ -1,4 +1,13 @@
-import { colorToCss, getColor, getTypography, toCssVariable } from './utils'
+import {
+  CssEntry,
+  colorToCss,
+  gatherTypoStyles,
+  generateClassSheet,
+  generateStyleSheet,
+  getColor,
+  getTypography,
+  toCssVariable,
+} from './utils'
 
 figma.showUI(__html__, {
   title: 'Extract Style (alpha)',
@@ -27,9 +36,26 @@ figma.ui.onmessage = (msg) => {
     })
   } else if (msg.type === 'toCssColor') {
     const colors = getColor()
+    const entries: CssEntry[] = []
+    colors.forEach((color) => {
+      entries.push(...colorToCss(color))
+    })
     figma.ui.postMessage({
-      type: 'color',
-      data: colors.map((color) => colorToCss(color)),
+      type: 'string',
+      data: generateStyleSheet(entries),
+    })
+  } else if (msg.type === 'toCssFont') {
+    const styleSheet = getTypography()
+      .map((font) => ({
+        entries: gatherTypoStyles(font),
+        name: toCssVariable(font.name, { prefix: 'xv-' }).slice(2),
+      }))
+      .map(({ entries, name }) => generateClassSheet(entries, name))
+      .join('\n\n')
+
+    figma.ui.postMessage({
+      type: 'string',
+      data: styleSheet,
     })
   } else {
     figma.closePlugin()

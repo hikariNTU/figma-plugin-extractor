@@ -16,10 +16,10 @@ body {
 .app {
   display: grid;
   grid-template-areas:
-    "header header"
-    "action text";
+    "action text"
+    "header header";
   grid-template-columns: minmax(auto, 150px) 1fr;
-  grid-template-rows: auto 1fr;
+  grid-template-rows: 1fr auto;
 }
 
 .header {
@@ -70,7 +70,7 @@ body {
   resize: none;
   padding: 1rem;
   font-size: small;
-  font-family: monospace;
+  font-family: Consolas, "Courier New", Courier, monospace;
   color: #333;
   white-space: pre;
   overflow: auto;

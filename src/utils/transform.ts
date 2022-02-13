@@ -1,5 +1,7 @@
-import { toRGB } from '.'
-import { ColorInfo } from './color'
+import { lineHeighToCss, translateFontVariant } from './typography'
+import { getTypography } from './localGetters'
+import { ColorInfo, CssEntry } from './type'
+import { colorCssFunctions, ColorVariableType, toRGB } from './color'
 
 export interface CssVariableOption {
   /**
@@ -18,17 +20,7 @@ export interface CssVariableOption {
   ignoreSpace: boolean
 }
 
-export type ColorToCssAttrFunction = (
-  name: string,
-  rgba: ReturnType<typeof toRGB>
-) => string[]
-
-export enum ColorVariableType {
-  rgbaOnly = 'RGBA',
-  hexOnly = 'HEX',
-  rgbBundle = 'RGB_BUNDLE',
-}
-
+// CSS Name transform
 const regSlash = new RegExp(/[\\/]/g)
 const ignoreChar = new RegExp(/[^a-zA-Z0-9-]/g)
 
@@ -63,29 +55,74 @@ const toCssVariable = (name = '', options?: Partial<CssVariableOption>) => {
   return `--${transformed}`
 }
 
-const colorCssFunctions: Record<ColorVariableType, ColorToCssAttrFunction> = {
-  [ColorVariableType.rgbaOnly]: (name, rgba) => [`${name}: ${rgba.join(', ')}`],
-  [ColorVariableType.hexOnly]: (name, rgba) => {
-    const attr = rgba
-      .map((number, idx) => {
-        const n = idx !== 3 ? number : Math.round(number * 255)
-        return n.toString(16).padStart(2, '0')
-      })
-      .join('')
-    return [`${name}: ${attr}`]
-  },
-  [ColorVariableType.rgbBundle]: (name, rgba) => [
-    `${name}--rgb: ${rgba.slice(0, 3).join(', ')}`,
-    ...(rgba[3] !== undefined ? [`${name}--opacity: ${rgba[3]}`] : []),
-    `${name}: rgb(var(${name}--rgb), var(${name}--opacity, 1))`,
-  ],
+// Entry transform
+const entryToString = (entry: CssEntry, indent = 2) =>
+  entry._isComment
+    ? `${' '.repeat(indent)}/* ${entry.value} */`
+    : `${' '.repeat(indent)}${entry.name}: ${entry.value};`
+
+// StyleSheet transform
+const generateStyleSheet = (entries: CssEntry[]): string => {
+  const styles = entries.map((entry) => entryToString(entry)).join('\n')
+  return `:root{\n${styles}\n}`
 }
 
+const generateClassSheet = (entries: CssEntry[], name: string): string => {
+  const styles = entries.map((entry) => entryToString(entry)).join('\n')
+  return `.${name}: {\n${styles}\n}`
+}
+
+// Color transform
 const colorToCss = (
   color: ColorInfo,
   func: ColorVariableType = ColorVariableType.rgbBundle
-): string[] => {
+): CssEntry[] => {
   return colorCssFunctions[func](toCssVariable(color.name), toRGB(color))
 }
 
-export { toCssVariable, splitGroup, colorToCss }
+// Type transform
+const gatherTypoStyles = (
+  font: ReturnType<typeof getTypography>[number]
+): CssEntry[] => {
+  const styles: CssEntry[] = []
+
+  // font-family
+  // doesn't seem right to me
+  // figma did not provide fallback mechanism as browser do
+  // provide a comment for further processing
+  styles.push({
+    _isComment: true,
+    value: `font-family:${font.fontName.family};`,
+  })
+
+  // font-size
+  styles.push({
+    name: 'font-size',
+    value: `${font.fontSize}px`,
+  })
+
+  // font-weight, italic
+  const variant = translateFontVariant(font.fontName.style)
+  styles.push({ name: 'font-weight', value: variant.weight.toString(10) })
+  if (variant.italic) {
+    styles.push({ name: 'font-style', value: 'italic' })
+  }
+
+  // line-height
+  const lineHeight = lineHeighToCss(font.lineHeight)
+  if (lineHeight) {
+    styles.push(lineHeight)
+  }
+
+  return styles
+}
+
+export {
+  toCssVariable,
+  splitGroup,
+  colorToCss,
+  generateStyleSheet,
+  entryToString,
+  gatherTypoStyles,
+  generateClassSheet,
+}

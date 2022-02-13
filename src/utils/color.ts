@@ -1,41 +1,46 @@
-export interface ColorInfo {
-  name: string
-  desc?: string
-  /** range: 0 ~ 1 float number */
-  rgb: RGB
-  /** range: 0 ~ 1 float number */
-  opacity?: number
+import { ColorInfo, CssEntry, RGBAList, RGBList } from './type'
+
+export type ColorToCssAttrFunction = (
+  name: string,
+  rgba: ReturnType<typeof toRGB>
+) => CssEntry[]
+
+export enum ColorVariableType {
+  rgbaOnly = 'RGBA',
+  hexOnly = 'HEX',
+  rgbBundle = 'RGB_BUNDLE',
 }
 
-/** 0~255 integer */
-export type Color8Bit = number
+export const colorCssFunctions: Record<
+  ColorVariableType,
+  ColorToCssAttrFunction
+> = {
+  [ColorVariableType.rgbaOnly]: (name, rgba) => [
+    { name, value: rgba.join(', ') },
+  ],
 
-/** 0~1 float */
-export type OpacityFloat = number
-export type RGBList = [Color8Bit, Color8Bit, Color8Bit]
-export type RGBAList = [...RGBList, OpacityFloat]
+  [ColorVariableType.hexOnly]: (name, rgba) => {
+    const value = rgba
+      .map((number, idx) => {
+        const n = idx !== 3 ? number : Math.round(number * 255)
+        return n.toString(16).padStart(2, '0')
+      })
+      .join('')
+    return [{ name, value }]
+  },
 
-/**
- * Retrieve all used local color in figma file.
- * @returns Color info if paint type is solid
- */
-export const getColor = (): ColorInfo[] => {
-  const paints = figma.getLocalPaintStyles()
-
-  const allColor = paints
-    .filter((p) => p.paints?.[0].type === 'SOLID')
-    .map((paintStyle) => {
-      const color = paintStyle.paints[0] as SolidPaint
-
-      return {
-        name: paintStyle.name,
-        desc: paintStyle.description,
-        rgb: { ...color.color },
-        opacity: color.opacity,
-      }
-    })
-
-  return allColor
+  [ColorVariableType.rgbBundle]: (name, rgba) => [
+    { name: `${name}--rgb`, value: rgba.slice(0, 3).join(', ') },
+    ...(rgba[3] !== undefined
+      ? [
+          {
+            name: `${name}--a`,
+            value: rgba[3].toPrecision(4),
+          },
+        ]
+      : []),
+    { name, value: `rgb(var(${name}--rgb), var(${name}--a, 1))` },
+  ],
 }
 
 export const toRGB = (color: ColorInfo): RGBList | RGBAList => {
