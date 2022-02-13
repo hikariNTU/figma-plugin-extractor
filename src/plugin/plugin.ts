@@ -7,19 +7,15 @@ import {
   getColor,
   getTypography,
   toCssVariable,
-} from './utils'
+} from '../utils'
+
+import { globalOption } from './globalOption'
 
 figma.showUI(__html__, {
   title: 'Extract Style (alpha)',
   height: 600,
   width: 800,
 })
-
-class GlobalOptions {
-  prefix = 'xv'
-}
-
-const globalOptions = new GlobalOptions()
 
 figma.ui.onmessage = (msg) => {
   if (msg.type === 'getColor') {
@@ -45,7 +41,7 @@ figma.ui.onmessage = (msg) => {
     const entries: CssEntry[] = []
     colors.forEach((color) => {
       entries.push(
-        ...colorToCss(color, undefined, { prefix: globalOptions.prefix })
+        ...colorToCss(color, undefined, { prefix: globalOption.prefix })
       )
     })
     figma.ui.postMessage({
@@ -56,7 +52,7 @@ figma.ui.onmessage = (msg) => {
     const styleSheet = getTypography()
       .map((font) => ({
         entries: gatherTypoStyles(font),
-        name: toCssVariable(font.name, { prefix: globalOptions.prefix }).slice(
+        name: toCssVariable(font.name, { prefix: globalOption.prefix }).slice(
           2
         ),
       }))

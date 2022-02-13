@@ -6,7 +6,7 @@ build({
     emptyOutDir: false,
     target: 'es6',
     lib: {
-      entry: resolve(__dirname, '../src/plugin.ts'),
+      entry: resolve(__dirname, '../src/plugin/plugin.ts'),
       fileName: () => 'plugin.js',
       formats: ['es'],
     },
