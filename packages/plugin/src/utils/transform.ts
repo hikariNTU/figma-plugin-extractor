@@ -22,7 +22,7 @@ export interface CssVariableOption {
 
 // CSS Name transform
 const regSlash = new RegExp(/[\\/]/g)
-const ignoreChar = new RegExp(/[^a-zA-Z0-9-]/g)
+const ignoreChar = new RegExp(/[^a-zA-Z0-9-\\/]/g)
 
 const defaultCssVariableOption: CssVariableOption = {
   prefix: '',
@@ -36,17 +36,26 @@ const splitGroup = (
   specifier = defaultCssVariableOption.groupSpecifier
 ) => name.split(specifier)
 
-const toCssVariable = (name = '', options?: Partial<CssVariableOption>) => {
-  const op = Object.assign({ ...defaultCssVariableOption }, options)
+const purifyName = (
+  name: string,
+  ignoreSpace: CssVariableOption['ignoreSpace'] = true
+): string => {
   let transformed = name
 
-  if (op.ignoreSpace) {
+  if (ignoreSpace) {
     transformed = transformed.replaceAll(' ', '')
   }
 
-  transformed = splitGroup(transformed, op.groupSpecifier)
-    .map((s) => s.replaceAll(ignoreChar, '-').toLowerCase())
-    .join(op.groupSplit)
+  transformed = transformed.replaceAll(ignoreChar, '-').toLowerCase()
+  return transformed
+}
+
+const toCssVariable = (name = '', options?: Partial<CssVariableOption>) => {
+  const op = Object.assign({ ...defaultCssVariableOption }, options)
+
+  let transformed = purifyName(name, op.ignoreSpace)
+
+  transformed = splitGroup(transformed, op.groupSpecifier).join(op.groupSplit)
 
   if (op.prefix) {
     transformed = `${op.prefix}-${transformed}`
@@ -69,7 +78,7 @@ const generateStyleSheet = (entries: CssEntry[]): string => {
 
 const generateClassSheet = (entries: CssEntry[], name: string): string => {
   const styles = entries.map((entry) => entryToString(entry)).join('\n')
-  return `.${name}: {\n${styles}\n}`
+  return `.${name} {\n${styles}\n}`
 }
 
 // Color transform
@@ -129,4 +138,5 @@ export {
   entryToString,
   gatherTypoStyles,
   generateClassSheet,
+  purifyName,
 }

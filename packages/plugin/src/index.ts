@@ -1,5 +1,6 @@
 import App from './App'
 import { render } from 'preact'
+import { EVENT } from './utils'
 
 const renderApp = () => {
   render(App(), document.body)
@@ -8,8 +9,9 @@ const renderApp = () => {
 ;(function () {
   onmessage = (event) => {
     console.log(event.data.pluginMessage)
+
     switch (event.data?.pluginMessage?.type) {
-      case 'json':
+      case EVENT.JSON.key:
       case 'color':
       case 'typo': {
         const el = document.getElementById('editor') as HTMLTextAreaElement
@@ -19,7 +21,7 @@ const renderApp = () => {
         }
         break
       }
-      case 'string': {
+      case EVENT.STRING.key: {
         const el = document.getElementById('editor') as HTMLTextAreaElement
 
         if (el) {

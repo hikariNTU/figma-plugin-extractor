@@ -45,7 +45,8 @@ body {
     margin-bottom: 4px;
     padding: 0 16px 4px 16px;
     border-bottom: var(--bd);
-    font-size: small;
+    font-size: 9px;
+    letter-spacing: 2px;
     color: #666;
   }
 
@@ -84,10 +85,10 @@ body {
   }
 }
 
-button {
+.action-button {
   --x-btn-bg: #0000;
   --x-btn-bd-color: #0000;
-  --x-btn-color: rgb(8, 120, 195);
+  --x-btn-color: #555;
 
   &:disabled {
     pointer-events: none;
@@ -97,6 +98,7 @@ button {
   &:hover {
     --x-btn-bg: #0001;
     --x-btn-bd-color: #0001;
+    --x-btn-color: rgb(8, 120, 195);
   }
 
   &:active {

@@ -4,8 +4,9 @@
     "lib": [
       "es6",
       "DOM",
-      "ESNext"
+      "esnext"
     ],
+    "module": "esnext",
     "moduleResolution": "node",
     "typeRoots": [
       "./node_modules/@types",
@@ -23,13 +24,11 @@
     "skipLibCheck": true,
     "isolatedModules": true
   },
-  "files": [
-    "env.d.ts",
-  ],
   "include": [
-    "./src/**/*",
-    "./script/**/*",
-    "./temp/**/*"
+    "./packages/*/src/**/*",
+    "./packages/*/script/**/*",
+    "./temp/**/*",
+    "./packages/*/*.d.ts"
   ],
   "exclude": [
     "**/node_modules/**/*",
