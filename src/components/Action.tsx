@@ -1,34 +1,37 @@
 import { useEvent } from '../utils/useEvent'
 import { FunctionComponent } from 'preact'
+import { EVENT } from '../utils'
 
 type ButtonEvent = { name: string; event: string }
 
 const EventBtn: FunctionComponent<ButtonEvent> = ({ name, event }) => (
-  <button id={event} onClick={useEvent(event).eventHandler}>
+  <button
+    class="action-button"
+    id={event}
+    onClick={useEvent(event).eventHandler}
+  >
     {name}
   </button>
 )
 
 const ActionBlock = () => {
-  const actions = {
-    color: { name: 'Get Color', event: 'getColor' },
-    cssColor: { name: 'to cssColor', event: 'toCssColor' },
-    text: { name: 'Get Typography', event: 'getText' },
-    cssFont: { name: 'to css font', event: 'toCssFont' },
-    cancel: { name: 'Cancel', event: 'cancel' },
-  }
-
   return (
     <div class="action">
       <span class="action-title">Action</span>
       {(
-        ['color', 'cssColor', 'text', 'cssFont'] as (keyof typeof actions)[]
+        [
+          'COLOR_DATA',
+          'COLOR_CSS',
+          'COLOR_CSS_MAP',
+          'TYPO_DATA',
+          'TYPO_CSS',
+        ] as (keyof typeof EVENT)[]
       ).map((key) => (
-        <EventBtn name={actions[key].name} event={actions[key].event} />
+        <EventBtn name={EVENT[key].name} event={EVENT[key].key} />
       ))}
       <div id="app"></div>
       <hr class="action-hr" />
-      <EventBtn name={actions.cancel.name} event={actions.cancel.event} />
+      <EventBtn name={EVENT.DISMISS.name} event={EVENT.DISMISS.key} />
     </div>
   )
 }

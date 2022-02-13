@@ -7,6 +7,9 @@ import {
   getColor,
   getTypography,
   toCssVariable,
+  splitGroup,
+  purifyName,
+  EVENT,
 } from '../utils'
 
 import { globalOption } from './globalOption'
@@ -17,53 +20,70 @@ figma.showUI(__html__, {
   width: 800,
 })
 
-figma.ui.onmessage = (msg) => {
-  if (msg.type === 'getColor') {
-    const color = getColor().map((v) => ({
-      ...v,
-      cssName: toCssVariable(v.name),
-    }))
-    figma.ui.postMessage({
-      type: 'color',
-      data: color,
-    })
-  } else if (msg.type === 'getText') {
-    const texts = getTypography().map((v) => ({
-      ...v,
-      cssName: toCssVariable(v.name),
-    }))
-    figma.ui.postMessage({
-      type: 'typo',
-      data: texts,
-    })
-  } else if (msg.type === 'toCssColor') {
-    const colors = getColor()
-    const entries: CssEntry[] = []
-    colors.forEach((color) => {
-      entries.push(
-        ...colorToCss(color, undefined, { prefix: globalOption.prefix })
-      )
-    })
-    figma.ui.postMessage({
-      type: 'string',
-      data: generateStyleSheet(entries),
-    })
-  } else if (msg.type === 'toCssFont') {
-    const styleSheet = getTypography()
-      .map((font) => ({
-        entries: gatherTypoStyles(font),
-        name: toCssVariable(font.name, { prefix: globalOption.prefix }).slice(
-          2
-        ),
-      }))
-      .map(({ entries, name }) => generateClassSheet(entries, name))
-      .join('\n\n')
+const toEditor = (data: unknown, isString = false) => {
+  figma.ui.postMessage({
+    type: isString ? EVENT.STRING.key : EVENT.JSON.key,
+    data,
+  })
+}
 
-    figma.ui.postMessage({
-      type: 'string',
-      data: styleSheet,
-    })
-  } else {
-    figma.closePlugin()
+interface MessageData {
+  type: keyof typeof EVENT
+  data: unknown
+}
+
+figma.ui.onmessage = (msg: MessageData) => {
+  switch (msg.type) {
+    case EVENT.COLOR_DATA.key: {
+      const color = getColor().map((v) => ({
+        ...v,
+        cssName: toCssVariable(v.name),
+      }))
+      toEditor(color)
+      break
+    }
+    case EVENT.TYPO_DATA.key: {
+      const texts = getTypography().map((v) => ({
+        ...v,
+        cssName: toCssVariable(v.name),
+      }))
+      toEditor(texts)
+      break
+    }
+    case EVENT.COLOR_CSS.key: {
+      const colors = getColor()
+      const entries: CssEntry[] = []
+      colors.forEach((color) => {
+        entries.push(
+          ...colorToCss(color, undefined, { prefix: globalOption.prefix })
+        )
+      })
+      toEditor(generateStyleSheet(entries), true)
+      break
+    }
+    case EVENT.TYPO_CSS.key: {
+      const styleSheet = getTypography()
+        .map((font) => ({
+          entries: gatherTypoStyles(font),
+          name: toCssVariable(font.name, { prefix: globalOption.prefix }).slice(
+            2
+          ),
+        }))
+        .map(({ entries, name }) => generateClassSheet(entries, name))
+        .join('\n\n')
+      toEditor(styleSheet, true)
+      break
+    }
+    case EVENT.COLOR_CSS_MAP.key: {
+      const colors = getColor().map(({ name }) =>
+        splitGroup(name).map((v) => purifyName(v))
+      )
+      toEditor(colors)
+      break
+    }
+    default:
+      figma.closePlugin()
   }
+
+  figma.notify('Done: ' + EVENT?.[msg.type]?.name)
 }
