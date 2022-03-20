@@ -3,5 +3,6 @@
     "hikari",
     "pnpm",
     "vite"
-  ]
+  ],
+  "cSpell.allowCompoundWords": true
 }

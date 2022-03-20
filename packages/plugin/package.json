@@ -29,7 +29,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/hikariNTU/figma-plugin-extractor"
+    "url": "https://github.com/hikariNTU/figma-plugin-extractor",
+    "directory": "packages/plugin"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "preact": "^10.6.5",
+    "@preact/preset-vite": "^2.1.7",
+    "vite-plugin-singlefile": "^0.6.3"
+  }
 }
