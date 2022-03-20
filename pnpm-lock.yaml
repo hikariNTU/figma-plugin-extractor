@@ -1,40 +1,51 @@
 lockfileVersion: 5.3
 
-specifiers:
-  '@babel/core': ^7.17.2
-  '@figma/plugin-typings': ^1.42.1
-  '@preact/preset-vite': ^2.1.7
-  '@types/node': ^17.0.17
-  '@typescript-eslint/eslint-plugin': ^5.11.0
-  '@typescript-eslint/parser': ^5.11.0
-  eslint: ^8.8.0
-  eslint-config-prettier: ^8.3.0
-  eslint-plugin-prettier: ^4.0.0
-  preact: ^10.6.5
-  prettier: ^2.5.1
-  sass: ^1.49.7
-  tsm: ^2.2.1
-  typescript: ^4.5.5
-  vite: ^2.8.0
-  vite-plugin-singlefile: ^0.6.3
+importers:
 
-devDependencies:
-  '@babel/core': 7.17.2
-  '@figma/plugin-typings': 1.42.1
-  '@preact/preset-vite': 2.1.7_dbe832d274977a27973c08350e6f846a
-  '@types/node': 17.0.17
-  '@typescript-eslint/eslint-plugin': 5.11.0_de5a1ddccd75ca1e499b8b8491d3dcba
-  '@typescript-eslint/parser': 5.11.0_eslint@8.8.0+typescript@4.5.5
-  eslint: 8.8.0
-  eslint-config-prettier: 8.3.0_eslint@8.8.0
-  eslint-plugin-prettier: 4.0.0_43197c8d12d1d439034cfcf65e1c48c2
-  preact: 10.6.5
-  prettier: 2.5.1
-  sass: 1.49.7
-  tsm: 2.2.1
-  typescript: 4.5.5
-  vite: 2.8.0_sass@1.49.7
-  vite-plugin-singlefile: 0.6.3_vite@2.8.0
+  .:
+    specifiers:
+      '@babel/core': ^7.17.2
+      '@figma/plugin-typings': ^1.42.1
+      '@types/node': ^17.0.17
+      '@typescript-eslint/eslint-plugin': ^5.11.0
+      '@typescript-eslint/parser': ^5.11.0
+      eslint: ^8.8.0
+      eslint-config-prettier: ^8.3.0
+      eslint-plugin-prettier: ^4.0.0
+      pnpm: ^6.31.0
+      prettier: ^2.5.1
+      sass: ^1.49.7
+      tsm: ^2.2.1
+      typescript: ^4.5.5
+      vite: ^2.8.0
+    devDependencies:
+      '@babel/core': 7.17.2
+      '@figma/plugin-typings': 1.42.1
+      '@types/node': 17.0.17
+      '@typescript-eslint/eslint-plugin': 5.11.0_de5a1ddccd75ca1e499b8b8491d3dcba
+      '@typescript-eslint/parser': 5.11.0_eslint@8.8.0+typescript@4.5.5
+      eslint: 8.8.0
+      eslint-config-prettier: 8.3.0_eslint@8.8.0
+      eslint-plugin-prettier: 4.0.0_43197c8d12d1d439034cfcf65e1c48c2
+      pnpm: 6.31.0
+      prettier: 2.5.1
+      sass: 1.49.7
+      tsm: 2.2.1
+      typescript: 4.5.5
+      vite: 2.8.0_sass@1.49.7
+
+  packages/plugin:
+    specifiers:
+      '@preact/preset-vite': ^2.1.7
+      preact: ^10.6.5
+      vite-plugin-singlefile: ^0.6.3
+    devDependencies:
+      '@preact/preset-vite': 2.1.7_dbe832d274977a27973c08350e6f846a
+      preact: 10.6.5
+      vite-plugin-singlefile: 0.6.3_vite@2.8.0
+
+  packages/types:
+    specifiers: {}
 
 packages:
 
@@ -1565,6 +1576,12 @@ packages:
   /picomatch/2.3.1:
     resolution: {integrity: sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA==}
     engines: {node: '>=8.6'}
+    dev: true
+
+  /pnpm/6.31.0:
+    resolution: {integrity: sha512-YUCyLI2J2wQsHWgcRYR8wUrTWsE0E8GX46XKtdXcUiE0GJJYi5saRy2Y8BMfLtlDHshHLs2U/KO1e5gsftJTFA==}
+    engines: {node: '>=12.17'}
+    hasBin: true
     dev: true
 
   /postcss/8.4.6:
