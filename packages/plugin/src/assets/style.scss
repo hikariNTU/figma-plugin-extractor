@@ -2,29 +2,39 @@
 @import "./utils.scss";
 
 :root {
-  --bd: solid 1px #2222;
+  --bd: solid 1px #fff2;
 }
 
 html {
   font-size: 12px;
+  height: 100%;
+  background-color: #2a2a2c;
+  color: #ccc;
+}
+
+*::selection {
+  background-color: #405b55;
+  color: white;
 }
 
 body {
   font-family: "Inter", "PingFang TC", "Noto Sans TC", "Microsoft JhengHei UI", "Microsoft JhengHei", sans-serif;
+  height: 100%;
 }
 
 .app {
+  height: 100%;
   display: grid;
   grid-template-areas:
-    "action text"
-    "header header";
-  grid-template-columns: minmax(auto, 150px) 1fr;
+    "header header"
+    "text action";
+  grid-template-columns: 1fr minmax(auto, 150px);
   grid-template-rows: 1fr auto;
 }
 
 .header {
   grid-area: header;
-  border-bottom: var(--bd);
+  position: relative;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -32,6 +42,18 @@ body {
   color: #ccc;
   background-color: #2a2a2c;
   letter-spacing: 0.1em;
+  justify-content: flex-end;
+
+  &::after {
+    content: "";
+    height: 3px;
+    display: block;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: linear-gradient(to right, #97ce78, #eb7a77, #405b55);
+  }
 }
 
 .action {
@@ -47,7 +69,6 @@ body {
     border-bottom: var(--bd);
     font-size: 9px;
     letter-spacing: 2px;
-    color: #666;
   }
 
   &-hr {
@@ -60,35 +81,10 @@ body {
   }
 }
 
-#editor {
-  width: 100%;
-  height: 100%;
-  flex: 1;
-  border: none;
-  border-bottom: var(--bd);
-  border-right: var(--bd);
-  border-radius: 0;
-  resize: none;
-  padding: 1rem;
-  font-size: small;
-  font-family: Consolas, "Courier New", Courier, monospace;
-  color: #333;
-  white-space: pre;
-  overflow: auto;
-
-  &:focus {
-    outline: solid 2px rgb(48, 172, 255, 0.5);
-  }
-
-  &::selection {
-    background-color: rgb(48, 172, 255, 0.2);
-  }
-}
-
 .action-button {
   --x-btn-bg: #0000;
   --x-btn-bd-color: #0000;
-  --x-btn-color: #555;
+  --x-btn-color: #bbb;
 
   &:disabled {
     pointer-events: none;
@@ -96,9 +92,9 @@ body {
   }
 
   &:hover {
-    --x-btn-bg: #0001;
+    --x-btn-bg: #fff1;
     --x-btn-bd-color: #0001;
-    --x-btn-color: rgb(8, 120, 195);
+    --x-btn-color: #97ce78;
   }
 
   &:active {
@@ -139,5 +135,35 @@ body {
     &:active {
       box-shadow: 0 0 0 3px #7c7c7c;
     }
+  }
+}
+
+.editor-block {
+  grid-area: text;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  border-bottom: var(--bd);
+  border-right: var(--bd);
+  overflow: auto;
+}
+
+.code-block {
+  margin: 0;
+  flex: 1;
+  border: var(--bd);
+  max-height: calc(100vh - 100px);
+  border-radius: 4px;
+  margin: 1rem;
+  padding: 1rem;
+  font-size: small;
+  font-family: Consolas, "Courier New", Courier, monospace;
+  color: #aaa;
+  white-space: pre;
+  overflow: auto;
+
+  &::selection {
+    background-color: rgb(48, 172, 255, 0.2);
   }
 }

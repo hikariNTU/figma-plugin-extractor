@@ -3,7 +3,15 @@ import { render } from 'preact'
 import { EVENT } from './utils'
 
 const renderApp = () => {
-  render(App(), document.body)
+  render(App, document.body)
+}
+
+const toCodeBlock = (str: string): void => {
+  const el = document.getElementById('editor') as HTMLPreElement
+
+  if (el) {
+    el.innerText = str
+  }
 }
 
 ;(function () {
@@ -14,19 +22,11 @@ const renderApp = () => {
       case EVENT.JSON.key:
       case 'color':
       case 'typo': {
-        const el = document.getElementById('editor') as HTMLTextAreaElement
-
-        if (el) {
-          el.value = JSON.stringify(event.data.pluginMessage.data, undefined, 2)
-        }
+        toCodeBlock(JSON.stringify(event.data.pluginMessage.data, undefined, 2))
         break
       }
       case EVENT.STRING.key: {
-        const el = document.getElementById('editor') as HTMLTextAreaElement
-
-        if (el) {
-          el.value = event.data.pluginMessage.data
-        }
+        toCodeBlock(event.data.pluginMessage.data)
         break
       }
       default:
