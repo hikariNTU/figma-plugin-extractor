@@ -12,7 +12,6 @@ importers:
       eslint: ^8.8.0
       eslint-config-prettier: ^8.3.0
       eslint-plugin-prettier: ^4.0.0
-      pnpm: ^6.31.0
       prettier: ^2.5.1
       sass: ^1.49.7
       tsm: ^2.2.1
@@ -27,7 +26,6 @@ importers:
       eslint: 8.8.0
       eslint-config-prettier: 8.3.0_eslint@8.8.0
       eslint-plugin-prettier: 4.0.0_43197c8d12d1d439034cfcf65e1c48c2
-      pnpm: 6.31.0
       prettier: 2.5.1
       sass: 1.49.7
       tsm: 2.2.1
@@ -1576,12 +1574,6 @@ packages:
   /picomatch/2.3.1:
     resolution: {integrity: sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA==}
     engines: {node: '>=8.6'}
-    dev: true
-
-  /pnpm/6.31.0:
-    resolution: {integrity: sha512-YUCyLI2J2wQsHWgcRYR8wUrTWsE0E8GX46XKtdXcUiE0GJJYi5saRy2Y8BMfLtlDHshHLs2U/KO1e5gsftJTFA==}
-    engines: {node: '>=12.17'}
-    hasBin: true
     dev: true
 
   /postcss/8.4.6:

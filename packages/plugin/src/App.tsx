@@ -1,13 +1,13 @@
 import ActionBlock from './components/Action'
 import EditorBlock from './components/Editor'
 import Header from './components/Header'
-import 'preact/debug'
 import { useEffect } from 'preact/hooks'
 
 const App = () => {
   useEffect(() => {
-    console.log('global')
+    console.log('hello effect')
   }, [])
+
   return (
     <>
       <Header></Header>
@@ -17,4 +17,8 @@ const App = () => {
   )
 }
 
-export default App
+const AppWrapper = () => {
+  return <App />
+}
+
+export default AppWrapper

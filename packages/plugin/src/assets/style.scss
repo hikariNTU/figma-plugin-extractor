@@ -29,7 +29,7 @@ body {
     "header header"
     "text action";
   grid-template-columns: 1fr minmax(auto, 150px);
-  grid-template-rows: 1fr auto;
+  grid-template-rows: auto 1fr;
 }
 
 .header {

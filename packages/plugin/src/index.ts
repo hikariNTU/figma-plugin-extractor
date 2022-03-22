@@ -3,7 +3,7 @@ import { render } from 'preact'
 import { EVENT } from './utils'
 
 const renderApp = () => {
-  render(App, document.body)
+  render(App(), document.body)
 }
 
 const toCodeBlock = (str: string): void => {
@@ -14,6 +14,7 @@ const toCodeBlock = (str: string): void => {
   }
 }
 
+// main
 ;(function () {
   onmessage = (event) => {
     console.log(event.data.pluginMessage)
