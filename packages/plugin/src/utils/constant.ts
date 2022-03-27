@@ -35,4 +35,4 @@ export const EVENT = {
     key: 'DISMISS',
     name: 'Dismiss',
   },
-}
+} as const
