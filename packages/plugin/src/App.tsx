@@ -1,19 +1,20 @@
 import ActionBlock from './components/Action'
 import EditorBlock from './components/Editor'
 import Header from './components/Header'
-import { useEffect } from 'preact/hooks'
+
+import { usePluginData } from './utils/usePluginData'
 
 const App = () => {
-  useEffect(() => {
-    console.log('hello effect')
-  }, [])
+  const { Context, contextData, setContextData, setPluginData } =
+    usePluginData()
 
   return (
-    <>
+    <Context.Provider value={contextData}>
       <Header></Header>
       <ActionBlock></ActionBlock>
       <EditorBlock></EditorBlock>
-    </>
+      <div>{JSON.stringify(contextData ?? {})}</div>
+    </Context.Provider>
   )
 }
 
