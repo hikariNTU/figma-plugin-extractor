@@ -1,4 +1,4 @@
-<div style='text-align: center'><img src='./src/assets/icon/extractor.svg' alt="" ></div>
+<div style='text-align: center'><img src='./packages/plugin/src/assets/icon/extractor.svg' alt="" ></div>
 
 # figma-plugin-extractor
 Extract basic design data to JSON and other preferred format.
