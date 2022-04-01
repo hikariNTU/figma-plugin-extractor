@@ -234,6 +234,12 @@ body {
     white-space: pre;
     overflow: auto;
 
+    --copy-btn-vis: 0;
+    &:hover,
+    &:focus-within {
+      --copy-btn-vis: 1;
+    }
+
     &::selection {
       background-color: rgb(48, 172, 255, 0.2);
     }
@@ -253,6 +259,9 @@ body {
   background-color: #666;
   cursor: pointer;
   border: none;
+
+  opacity: var(--copy-btn-vis);
+  transition: opacity 0.1s;
 
   &:hover {
     background-color: #777;
