@@ -23,7 +23,8 @@
     "start": "vite",
     "build": "vite build",
     "build-plugin": "tsm ./script/build-plugin.ts",
-    "bundle": "pnpm build && pnpm build-plugin"
+    "bundle": "pnpm build && pnpm build-plugin",
+    "pack": "pnpm pack"
   },
   "author": "hikariNTU",
   "license": "MIT",

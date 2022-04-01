@@ -1,7 +1,11 @@
 <div style='text-align: center'><img src='./src/assets/icon/extractor.svg' alt="" ></div>
 
 # figma-plugin-extractor
-extract figma data to variable
+Extract basic design data to JSON and other preferred format.
+
+## Install prebundle version
+
+Download the zip file in assets, and follow the instruction (install plugin in figma) below.
 
 ## Develop
 
@@ -26,10 +30,24 @@ npm i -g pnpm
 pnpm i
 ```
 
+**UI Preview**
+
+```
+pnpm start --filter plugin
+```
+
+http://localhost:3333/ should be opened by vite. You won't need this step if you mainly check the result in figma.
+
 **Bundle plugin**
 
 ```
-pnpm bundle
+pnpm bundle --filter plugin
 ```
 
-This will transform `index.html` and `plugin.ts`
+This will transform `index.html` and `plugin.ts` into dist folder.
+
+**install plugin in figma**
+
+Open figma and select `plugins > development > import plugin from manifest`, choose the `manifest.json` file located in `package/plugin`
+
+You will only need to install once.
