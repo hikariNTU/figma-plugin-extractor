@@ -26,10 +26,10 @@ body {
   height: 100%;
   display: grid;
   grid-template-areas:
-    "header header"
-    "text action";
+    "text action"
+    "header header";
   grid-template-columns: 1fr minmax(auto, 150px);
-  grid-template-rows: auto 1fr;
+  grid-template-rows: 1fr auto;
 }
 
 .header {
@@ -44,13 +44,13 @@ body {
   letter-spacing: 0.1em;
   justify-content: flex-end;
 
-  &::after {
+  &::before {
     content: "";
     height: 3px;
     display: block;
     position: absolute;
     right: 0;
-    bottom: 0;
+    top: 0;
     left: 0;
     background: linear-gradient(to right, #97ce78, #eb7a77, #405b55);
   }
@@ -186,7 +186,6 @@ body {
   min-width: 0;
   min-height: 0;
   position: relative;
-
 }
 
 .tab-group {
