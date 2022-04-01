@@ -2,29 +2,39 @@
 @import "./utils.scss";
 
 :root {
-  --bd: solid 1px #2222;
+  --bd: solid 1px #fff2;
 }
 
 html {
   font-size: 12px;
+  height: 100%;
+  background-color: #2a2a2c;
+  color: #ccc;
+}
+
+*::selection {
+  background-color: #405b55;
+  color: white;
 }
 
 body {
   font-family: "Inter", "PingFang TC", "Noto Sans TC", "Microsoft JhengHei UI", "Microsoft JhengHei", sans-serif;
+  height: 100%;
 }
 
 .app {
+  height: 100%;
   display: grid;
   grid-template-areas:
-    "action text"
+    "text action"
     "header header";
-  grid-template-columns: minmax(auto, 150px) 1fr;
+  grid-template-columns: 1fr minmax(auto, 150px);
   grid-template-rows: 1fr auto;
 }
 
 .header {
   grid-area: header;
-  border-bottom: var(--bd);
+  position: relative;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -32,6 +42,18 @@ body {
   color: #ccc;
   background-color: #2a2a2c;
   letter-spacing: 0.1em;
+  justify-content: flex-end;
+
+  &::before {
+    content: "";
+    height: 3px;
+    display: block;
+    position: absolute;
+    right: 0;
+    top: 0;
+    left: 0;
+    background: linear-gradient(to right, #97ce78, #eb7a77, #405b55);
+  }
 }
 
 .action {
@@ -47,7 +69,6 @@ body {
     border-bottom: var(--bd);
     font-size: 9px;
     letter-spacing: 2px;
-    color: #666;
   }
 
   &-hr {
@@ -60,35 +81,10 @@ body {
   }
 }
 
-#editor {
-  width: 100%;
-  height: 100%;
-  flex: 1;
-  border: none;
-  border-bottom: var(--bd);
-  border-right: var(--bd);
-  border-radius: 0;
-  resize: none;
-  padding: 1rem;
-  font-size: small;
-  font-family: Consolas, "Courier New", Courier, monospace;
-  color: #333;
-  white-space: pre;
-  overflow: auto;
-
-  &:focus {
-    outline: solid 2px rgb(48, 172, 255, 0.5);
-  }
-
-  &::selection {
-    background-color: rgb(48, 172, 255, 0.2);
-  }
-}
-
 .action-button {
   --x-btn-bg: #0000;
   --x-btn-bd-color: #0000;
-  --x-btn-color: #555;
+  --x-btn-color: #bbb;
 
   &:disabled {
     pointer-events: none;
@@ -96,9 +92,9 @@ body {
   }
 
   &:hover {
-    --x-btn-bg: #0001;
+    --x-btn-bg: #fff1;
     --x-btn-bd-color: #0001;
-    --x-btn-color: rgb(8, 120, 195);
+    --x-btn-color: #97ce78;
   }
 
   &:active {
@@ -139,5 +135,126 @@ body {
     &:active {
       box-shadow: 0 0 0 3px #7c7c7c;
     }
+  }
+}
+
+.editor-block {
+  grid-area: text;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 1rem;
+  min-width: 0;
+  min-height: 0;
+  border-bottom: var(--bd);
+  border-right: var(--bd);
+  overflow: auto;
+  padding: 1rem;
+}
+
+.editor-tabs {
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+.editor-tab {
+  padding: 0.5rem 1rem;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  font-size: large;
+  border-radius: 4px;
+  text-transform: capitalize;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #fff2;
+  }
+
+  &--selected {
+    border-bottom: solid 2px rgb(48, 172, 255);
+    border-radius: 4px 4px 0 0;
+  }
+}
+
+.tabular {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  position: relative;
+}
+
+.tab-group {
+  list-style: none;
+  margin: 0 0 -1px 0;
+  padding: 0;
+  display: flex;
+  gap: 2px;
+  text-transform: capitalize;
+
+  &-li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.25rem 0.75rem;
+
+    border: solid 1px #ccc2;
+    border-bottom-color: #0000;
+    border-radius: 4px 4px 0 0;
+
+    &:hover:not(.tab-group-li--selected) {
+      background-color: #ccc2;
+      cursor: pointer;
+    }
+
+    z-index: 1;
+    &--selected {
+      color: rgb(48, 172, 255);
+      border-bottom: solid 2px #2a2a2a;
+    }
+  }
+
+  &-code {
+    margin: 0;
+    padding: 1rem;
+    flex: 1;
+    border: var(--bd);
+    max-height: calc(100vh - 100px);
+    min-height: 200px;
+    min-width: 0;
+    width: 100%;
+    border-radius: 0 4px 4px 4px;
+    font-size: small;
+    font-family: Consolas, "Courier New", Courier, monospace;
+    color: #aaa;
+    white-space: pre;
+    overflow: auto;
+
+    &::selection {
+      background-color: rgb(48, 172, 255, 0.2);
+    }
+  }
+}
+
+.copy-btn {
+  position: absolute;
+  margin-left: auto;
+  display: flex;
+  top: 2.5rem;
+  right: 1rem;
+  width: 28px;
+  height: 28px;
+  border-radius: 4px;
+  color: #0006;
+  background-color: #666;
+  cursor: pointer;
+  border: none;
+
+  &:hover {
+    background-color: #777;
   }
 }

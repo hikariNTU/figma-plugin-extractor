@@ -1,4 +1,4 @@
-import { ColorInfo, CssEntry, RGBAList, RGBList } from './type'
+import type { ColorInfo, CssEntry, RGBAList, RGBList } from '../share'
 
 export type ColorToCssAttrFunction = (
   name: string,
