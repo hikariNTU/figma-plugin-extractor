@@ -1,6 +1,6 @@
 import { useEvent } from '../utils/useEvent'
 import { FunctionComponent } from 'preact'
-import { EVENT } from '../utils'
+import { EVENT } from '../share'
 
 type ButtonEvent = { name: string; event: string }
 
@@ -18,15 +18,7 @@ const ActionBlock = () => {
   return (
     <div class="action">
       <span class="action-title">Action</span>
-      {(
-        [
-          'COLOR_DATA',
-          'COLOR_CSS',
-          'COLOR_CSS_MAP',
-          'TYPO_DATA',
-          'TYPO_CSS',
-        ] as (keyof typeof EVENT)[]
-      ).map((key) => (
+      {(['GET_ALL'] as (keyof typeof EVENT)[]).map((key) => (
         <EventBtn name={EVENT[key].name} event={EVENT[key].key} />
       ))}
       <div id="app"></div>

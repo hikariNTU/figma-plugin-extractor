@@ -1,4 +1,4 @@
-import { CssEntry } from './type'
+import type { CssEntry } from '../share'
 
 export const lineHeighToCss = (line: LineHeight): CssEntry | undefined => {
   switch (line.unit) {

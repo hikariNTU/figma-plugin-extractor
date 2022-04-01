@@ -1,6 +1,6 @@
 import { lineHeighToCss, translateFontVariant } from './typography'
-import { getTypography } from './localGetters'
-import { ColorInfo, CssEntry } from './type'
+import type { TypoInfo } from '../plugin/localGetters'
+import type { ColorInfo, CssEntry } from '../share'
 import { colorCssFunctions, ColorVariableType, toRGB } from './color'
 
 export interface CssVariableOption {
@@ -94,9 +94,7 @@ const colorToCss = (
 }
 
 // Type transform
-const gatherTypoStyles = (
-  font: ReturnType<typeof getTypography>[number]
-): CssEntry[] => {
+const gatherTypoStyles = (font: TypoInfo[number]): CssEntry[] => {
   const styles: CssEntry[] = []
 
   // font-family

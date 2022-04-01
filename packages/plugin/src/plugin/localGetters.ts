@@ -2,7 +2,7 @@
  * This file contain how we retrieve data from figma api in plugin
  */
 
-import { ColorInfo } from './type'
+import type { ColorInfo } from '../share'
 
 /**
  * Retrieve all used local color in figma file.
@@ -80,3 +80,5 @@ export const getTypography = () => {
 
   return allTypos
 }
+
+export type TypoInfo = ReturnType<typeof getTypography>
