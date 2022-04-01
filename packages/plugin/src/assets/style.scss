@@ -185,6 +185,8 @@ body {
   flex: 1;
   min-width: 0;
   min-height: 0;
+  position: relative;
+
 }
 
 .tab-group {
@@ -192,6 +194,7 @@ body {
   margin: 0 0 -1px 0;
   padding: 0;
   display: flex;
+  gap: 2px;
   text-transform: capitalize;
 
   &-li {
@@ -201,13 +204,14 @@ body {
     padding: 0.25rem 0.75rem;
 
     border: solid 1px #ccc2;
+    border-bottom-color: #0000;
     border-radius: 4px 4px 0 0;
 
     &:hover:not(.tab-group-li--selected) {
       background-color: #ccc2;
       cursor: pointer;
     }
-    
+
     z-index: 1;
     &--selected {
       color: rgb(48, 172, 255);
@@ -234,5 +238,24 @@ body {
     &::selection {
       background-color: rgb(48, 172, 255, 0.2);
     }
+  }
+}
+
+.copy-btn {
+  position: absolute;
+  margin-left: auto;
+  display: flex;
+  top: 2.5rem;
+  right: 1rem;
+  width: 28px;
+  height: 28px;
+  border-radius: 4px;
+  color: #0006;
+  background-color: #666;
+  cursor: pointer;
+  border: none;
+
+  &:hover {
+    background-color: #777;
   }
 }
