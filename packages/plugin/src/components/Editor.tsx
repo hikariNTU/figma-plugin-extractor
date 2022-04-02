@@ -81,6 +81,19 @@ const ScopeMap: Record<Tabs, TabVariant[]> = {
           })
         ),
     },
+    {
+      name: 'Font map',
+      transform: (data) =>
+        (data?.typo as TypoInfo)?.map?.((font) => {
+          const localName = toCssVariable(font.name, {
+            prefix: globalOption.prefix,
+          })
+          return {
+            name: font.name,
+            cssName: localName.slice(2),
+          }
+        }),
+    },
   ],
 }
 
