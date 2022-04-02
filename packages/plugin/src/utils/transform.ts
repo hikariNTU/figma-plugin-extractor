@@ -2,6 +2,7 @@ import { lineHeighToCss, translateFontVariant } from './typography'
 import type { TypoInfo } from '../plugin/localGetters'
 import type { ColorInfo, CssEntry } from '../share'
 import { colorCssFunctions, ColorVariableType, toRGB } from './color'
+import { globalOption } from './globalOption'
 
 export interface CssVariableOption {
   /**
@@ -97,32 +98,43 @@ const colorToCss = (
 const gatherTypoStyles = (font: TypoInfo[number]): CssEntry[] => {
   const styles: CssEntry[] = []
 
-  // font-family
-  // doesn't seem right to me
-  // figma did not provide fallback mechanism as browser do
-  // provide a comment for further processing
-  styles.push({
-    _isComment: true,
-    value: `font-family:${font.fontName.family};`,
-  })
-
-  // font-size
-  styles.push({
-    name: 'font-size',
-    value: `${font.fontSize}px`,
-  })
-
-  // font-weight, italic
-  const variant = translateFontVariant(font.fontName.style)
-  styles.push({ name: 'font-weight', value: variant.weight.toString(10) })
-  if (variant.italic) {
-    styles.push({ name: 'font-style', value: 'italic' })
+  if (globalOption.fontStyleInclude.includes('font-family')) {
+    // font-family
+    // doesn't seem right to me
+    // figma did not provide fallback mechanism as browser do
+    // provide a comment for further processing
+    styles.push({
+      name: 'font-family',
+      value: `font-family:${font.fontName.family};`,
+    })
   }
 
-  // line-height
-  const lineHeight = lineHeighToCss(font.lineHeight)
-  if (lineHeight) {
-    styles.push(lineHeight)
+  if (globalOption.fontStyleInclude.includes('font-size')) {
+    // font-size
+    styles.push({
+      name: 'font-size',
+      value: `${font.fontSize}px`,
+    })
+  }
+
+  if (globalOption.fontStyleInclude.includes('font-weight')) {
+    // font-weight, italic
+    const variant = translateFontVariant(font.fontName.style)
+    styles.push({ name: 'font-weight', value: variant.weight.toString(10) })
+
+    if (
+      globalOption.fontStyleInclude.includes('font-style') &&
+      variant.italic
+    ) {
+      styles.push({ name: 'font-style', value: 'italic' })
+    }
+  }
+
+  if (globalOption.fontStyleInclude.includes('line-height')) {
+    const lineHeight = lineHeighToCss(font.lineHeight)
+    if (lineHeight) {
+      styles.push(lineHeight)
+    }
   }
 
   return styles
