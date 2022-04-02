@@ -1,5 +1,5 @@
 import { useState } from 'preact/hooks'
-import { globalOption } from '../plugin/globalOption'
+import { globalOption } from '../utils/globalOption'
 import {
   colorToCss,
   gatherTypoStyles,
@@ -20,7 +20,7 @@ const ScopeMap: Record<Tabs, TabVariant[]> = {
   color: [
     { name: 'Raw', transform: (data) => data['color'] },
     {
-      name: 'CSS',
+      name: 'CSS variables',
       transform: (data) => {
         const colors = data.color as ColorInfo[]
         if (!colors?.length) {
@@ -62,6 +62,24 @@ const ScopeMap: Record<Tabs, TabVariant[]> = {
           }))
           .map(({ entries, name }) => generateClassSheet(entries, name))
           .join('\n\n'),
+    },
+    {
+      name: 'CSS variable',
+      transform: (data) =>
+        generateStyleSheet(
+          (data?.typo as TypoInfo)?.flatMap?.((font) => {
+            const localName = toCssVariable(font.name, {
+              prefix: globalOption.prefix,
+            })
+            return [
+              { _isComment: true, value: font.name },
+              ...gatherTypoStyles(font).map(({ name, ...rest }) => ({
+                name: `${localName}--${name}`,
+                ...rest,
+              })),
+            ] as CssEntry[]
+          })
+        ),
     },
   ],
 }

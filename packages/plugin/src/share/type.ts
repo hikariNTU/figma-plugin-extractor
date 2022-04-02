@@ -22,3 +22,10 @@ export type Color8Bit = number
 export type OpacityFloat = number
 export type RGBList = [Color8Bit, Color8Bit, Color8Bit]
 export type RGBAList = [...RGBList, OpacityFloat]
+
+export type TypoInnerStyle =
+  | 'font-size'
+  | 'font-family'
+  | 'font-weight'
+  | 'font-style'
+  | 'line-height'
